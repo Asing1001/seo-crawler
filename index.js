@@ -1,4 +1,3 @@
-const { Chromeless } = require('chromeless')
 const { start } = require('./crawler');
 
 async function run() {
