@@ -75,7 +75,7 @@ const sameOrigin = (href) => href.indexOf(startUri.origin) !== -1
 const generateSiteMap = () => {
     const freq = 'daily';
     let xml = '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
-    const dateFileName = moment().format('DD-MM-YYYY-HH-mm-ss-')
+    const dateFileName = moment().format('MM-DD-YYYY')
     const filename = `${_distFolder}${dateFileName}sitemap.xml`
     for (let url in visitHash) {
         //need to replace all '&', otherwise googleBot will consider it as broken sitemap.xml
