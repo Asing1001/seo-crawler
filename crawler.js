@@ -4,24 +4,25 @@ const { outputFile } = require('fs-extra');
 const cheerio = require('cheerio');
 const moment = require('moment');
 const queue = require('async/queue');
-const { crawlerSetting: { userAgent } } = require('./config');
+const logger = require('./logger');
+const { crawlerSetting: { userAgent, maxInstance } } = require('./config');
 
 const visitHash = {};
 let _distFolder, startUri;
 let q = queue(async function (task, callback) {
     await task.crawlPage(task.url);
-}, 50);
+}, maxInstance);
 
-async function start({ startUrl, distFolder }) {
+async function start({ startUrl, distFolder = 'dist/' }) {
     return new Promise((resolve, reject) => {
         _distFolder = distFolder;
         startUri = new URL(startUrl);
         visitHash[startUrl] = true;
-        console.time(`Crawl ${startUrl} finish in`);
+        logger.profile(`Crawl ${startUrl}`);
         q.push({ crawlPage, url: startUrl })
         q.drain = async () => {
-            console.timeEnd(`Crawl ${startUrl} finish in`);
-            console.log(`Total page visited : ${Object.keys(visitHash).length}`)
+            logger.profile(`Crawl ${startUrl}`);
+            logger.info(`Total page visited : ${Object.keys(visitHash).length}`)
             await generateSiteMap();
             resolve()
         };
@@ -31,16 +32,16 @@ async function start({ startUrl, distFolder }) {
 async function crawlPage(url) {
     return new Promise(async (resolve, reject) => {
         try {
-            console.time(`Crawl ${url}`)
+            logger.profile(`Crawl ${url}`)
             const chromeless = new Chromeless()
             const html = await chromeless
                 .setUserAgent(userAgent)
                 .goto(url)
                 .html()
-            console.timeEnd(`Crawl ${url}`)
+            logger.profile(`Crawl ${url}`)
             const $ = cheerio.load(html)
             const $urls = $('a[href]')
-            console.log(`find url count :${$urls.length}`);
+            logger.info(`find url count :${$urls.length}`);
             $urls.each((index, anchor) => {
                 const { href } = new URL($(anchor).attr('href'), startUri.origin);
                 if (sameOrigin(href) && !visitHash[href]) {
@@ -50,12 +51,12 @@ async function crawlPage(url) {
             })
 
             const uri = new URL(url);
-            console.log(`visitHash length : ${Object.keys(visitHash).length}`);
+            logger.info(`visitHash length : ${Object.keys(visitHash).length}`);
             await outputFile(`${_distFolder}${uri.pathname}.html`, html);
             await chromeless.end()
         }
         catch (err) {
-            console.error(err)
+            logger.error(err)
         }
         finally {
             resolve()

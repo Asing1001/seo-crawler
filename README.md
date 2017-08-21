@@ -10,6 +10,27 @@ cd "C:\Program Files (x86)\Google\Chrome\Application"
 chrome --remote-debugging-port=9222 --disable-gpu --headless
 ```
 
+## Developement
+
+```
+# install package
+npm install
+
+# start program
+npm start
+
+# test
+npm test
+
+# test in watch mode
+npm run test:w
+
+```
+
+## Others
+
+In case you need to kill chrome process : `taskkill /F /IM chrome.exe`
+
 ## References
 
 [Chromeless](https://github.com/graphcool/chromeless)

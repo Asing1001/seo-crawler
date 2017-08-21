@@ -13,7 +13,8 @@ const tasks = [{
 }]
 
 const crawlerSetting = {
-    userAgent : 'Mozilla/5.0 (Macintosh; Intel Mac OS X) seo.crawler'
+    userAgent : 'Mozilla/5.0 (Macintosh; Intel Mac OS X) seo.crawler',
+    maxInstance : 50
 }
 
 module.exports = { tasks, crawlerSetting }
