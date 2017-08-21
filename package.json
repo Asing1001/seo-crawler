@@ -6,6 +6,7 @@
   "author": "Andy Chen <shinningstar1001@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "start": "node index.js",
     "test": "ava *.test.js -v",
     "test:w": "ava *.test.js -v --watch"
   },
@@ -14,7 +15,8 @@
     "cheerio": "^1.0.0-rc.2",
     "chromeless": "^1.2.0",
     "fs-extra": "^4.0.1",
-    "moment": "^2.18.1"
+    "moment": "^2.18.1",
+    "node-schedule": "^1.2.4"
   },
   "devDependencies": {
     "ava": "^0.21.0",
