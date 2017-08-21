@@ -7,8 +7,7 @@ const queue = require('async/queue');
 const logger = require('./logger');
 const { crawlerSetting: { userAgent, maxInstance } } = require('./config');
 
-const visitHash = {};
-let _distFolder, startUri;
+let _distFolder, startUri, visitHash;
 let q = queue(async function (task, callback) {
     await task.crawlPage(task.url);
 }, maxInstance);
@@ -17,6 +16,7 @@ async function start({ startUrl, distFolder = 'dist/' }) {
     return new Promise((resolve, reject) => {
         _distFolder = distFolder;
         startUri = new URL(startUrl);
+        visitHash = {};
         visitHash[startUrl] = true;
         logger.profile(`Crawl ${startUrl}`);
         q.push({ crawlPage, url: startUrl })
