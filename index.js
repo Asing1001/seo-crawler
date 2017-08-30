@@ -3,6 +3,7 @@ const { scheduleJob } = require('node-schedule');
 const { start } = require('./crawler');
 const { tasks } = require('./config');
 const logger = require('./logger');
+const { killChrome, runChromeHeadless } = require('./command');
 
 function run() {
     logger.info(`Find ${tasks.length} tasks`);
@@ -12,6 +13,8 @@ function run() {
         const startHour = (now.hour() + (index * 2)) % 24;
         logger.info(`task ${index} created, startTime: ${startHour}:${startMinute}`);
         scheduleJob(`${startMinute} ${startHour} * * *`, async function () {
+            await killChrome();
+            await runChromeHeadless();
             logger.info(`task ${JSON.stringify(task)} start!`);
             await start(task)
         });
