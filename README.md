@@ -1,7 +1,10 @@
-# seo-crawler
+# SEO crawler
 
-This project is for crawl full website with javascript excuted by headless chrome.
-Search engine crawler won't excute javascript for your website, but mordern web use lots of javascript. As a result it can not be indexed correctly by search engine, hence we use this project to crawl our site then serve htmls to search engine crawler.
+Crawl your website with javascript excuted
+
+## Why do you need this ?
+
+Mordern web use lots of javascript but search engine crawler won't excute it. As a result pages can not be indexed correctly. So we  crawl our site with js-excuted and serve it to search engine crawler.
 
 ## Run Chrome headless-ly on Windows
 
