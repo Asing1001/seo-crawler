@@ -7,7 +7,9 @@ Mordern web use lots of javascript but search engine crawler won't excute it. As
 ## Getting Start
 
 ### Install package
-`npm install`
+```
+npm install
+```
 
 ### Modify [config.js](./config.js)
 For example save html snapshot in `C:/snapshot/`, target website is `https://www.paddingleft.com/` 
@@ -19,18 +21,18 @@ const tasks = [{
 ```
 
 ### Start program
-`npm start`
+```
+npm start
+```
 
 ## Developement
 
 ```
-
 # Testing
 npm test
 
 # Testing in watch mode
 npm run test:w
-
 ```
 
 ## Others
