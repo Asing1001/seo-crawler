@@ -1,8 +1,6 @@
 # SEO crawler
 
-Crawl your website with javascript excuted
-
-## Why do you need this
+Crawl your website with javascript excuted.
 
 Mordern web use lots of javascript but search engine crawler won't excute it. As a result pages can not be indexed correctly. So we  crawl our site with js-excuted and serve it to search engine crawler.
 
@@ -11,7 +9,7 @@ Mordern web use lots of javascript but search engine crawler won't excute it. As
 ### Install package
 `npm install`
 
-### Modify target website in [config.js](./config.js)
+### Modify [config.js](./config.js)
 For example save html snapshot in `C:/snapshot/`, target website is `https://www.paddingleft.com/` 
 ```
 const tasks = [{
