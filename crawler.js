@@ -10,6 +10,7 @@ const { crawlerSetting: { userAgent, maxInstance } } = require('./config');
 let _distFolder, startUri, visitHash;
 let q = queue(async function (task, callback) {
     await crawlPage(task.url);
+    return;
 }, maxInstance);
 
 async function start({ startUrl, distFolder = 'dist/' }) {
@@ -51,7 +52,7 @@ async function crawlPage(url) {
             })
 
             const uri = new URL(url);
-            logger.info(`visitHash length : ${Object.keys(visitHash).length}, q.length() : ${q.length()}`);            
+            logger.info(`visitHash length : ${Object.keys(visitHash).length}, q.length() : ${q.length()}, q.running() : ${q.running()}`);            
             await outputFile(`${_distFolder}${uri.pathname}.html`, html);
             await chromeless.end()
         }
