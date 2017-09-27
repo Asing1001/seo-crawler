@@ -33,6 +33,7 @@ async function start({ startUrl, distFolder = 'dist/' }) {
 async function crawlPage(url) {
     return new Promise(async (resolve, reject) => {
         try {
+            setTimeout(resolve, 30000)
             logger.profile(`Crawl ${url}`)
             const chromeless = new Chromeless()
             const html = await chromeless
