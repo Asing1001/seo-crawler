@@ -20,7 +20,7 @@ async function start({ startUrl, distFolder = 'dist/' }) {
         visitHash = {};
         visitHash[startUrl] = true;
         logger.profile(`Crawl ${startUrl}`);
-        q.push({ crawlPage, url: startUrl })        
+        q.push({ crawlPage, url: startUrl })
         q.drain = async () => {
             logger.profile(`Crawl ${startUrl}`);
             logger.info(`Total page visited : ${Object.keys(visitHash).length}`)
@@ -33,7 +33,13 @@ async function start({ startUrl, distFolder = 'dist/' }) {
 async function crawlPage(url) {
     return new Promise(async (resolve, reject) => {
         try {
-            setTimeout(resolve, 30000)
+            let isFinished = false;
+            setTimeout(() => {
+                if (!isFinished) {
+                    logger.warn(`${url} is not finished after 30000 ms`);
+                    resolve()
+                }
+            }, 30000)
             logger.profile(`Crawl ${url}`)
             const chromeless = new Chromeless()
             const html = await chromeless
@@ -53,14 +59,14 @@ async function crawlPage(url) {
             })
 
             const uri = new URL(url);
-            logger.info(`visitHash length : ${Object.keys(visitHash).length}, q.length() : ${q.length()}, q.running() : ${q.running()}`);            
+            logger.info(`visitHash length : ${Object.keys(visitHash).length}, q.length() : ${q.length()}, q.running() : ${q.running()}`);
             await outputFile(`${_distFolder}${uri.pathname}.html`, html);
             await chromeless.end()
+            isFinished = true;
+            resolve()
         }
         catch (err) {
             logger.error(err)
-        }
-        finally {
             resolve()
         }
     })
