@@ -1,6 +1,6 @@
 import test from 'ava';
 import sinon from 'sinon';
-import { start, makeValidFileName } from './crawler';
+import { initialize, makeValidFileName } from './crawler';
 import * as fsExtra from 'fs-extra';
 
 let sandbox;
@@ -11,10 +11,9 @@ test.beforeEach(() => {
 
 test.afterEach(() => sandbox.restore());
 
-test('crawlPage', async t => {
-    // let stubOutputFile = sandbox.stub(fsExtra, 'outputFile');
-    // await start({ startUrl: 'http://acstatic.azurewebsites.net/' });
-    // t.true(stubOutputFile.called);
+test('initialize without error', async t => {
+    await initialize({ startUrl: 'http://acstatic.azurewebsites.net/' });
+    t.pass();
 });
 
 test('makeValidFileName', t => {

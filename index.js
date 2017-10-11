@@ -1,6 +1,6 @@
 const moment = require('moment');
 const { scheduleJob } = require('node-schedule');
-const { start } = require('./crawler');
+const { initialize } = require('./crawler');
 const { tasks } = require('./config');
 const logger = require('./logger');
 const { killChrome, runChromeHeadless } = require('./command');
@@ -16,7 +16,7 @@ function run() {
             await killChrome();
             await runChromeHeadless();
             logger.info(`task ${JSON.stringify(task)} start!`);
-            await start(task)
+            await initialize(task)
         });
     })
 }
