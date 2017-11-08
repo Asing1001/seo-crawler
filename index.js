@@ -7,12 +7,16 @@ const { killChrome, runChromeHeadless } = require('./command');
 
 function run() {
     logger.info(`Find ${tasks.length} tasks`);
-    const now = moment();
-    const startMinute = now.minute() + 1;
+    const startTime = moment().add(5, 'seconds');
+    const startMinute = startTime.minute();
+    const startSecond = startTime.second();
+    let startHour = startTime.hour();
     tasks.forEach((task, index) => {
-        const startHour = (now.hour() + (index * 2)) % 24;
-        logger.info(`task ${index} created, startTime: ${startHour}:${startMinute}`);
-        scheduleJob(`${startMinute} ${startHour} * * *`, async function () {
+        if (index > 0) {
+            startHour = (startHour + tasks[index - 1].maxDuration) % 24
+        }
+        logger.info(`Task ${task.startUrl} created, startTime: ${startHour}:${startMinute}:${startSecond}`);
+        scheduleJob(`${startSecond} ${startMinute} ${startHour} * * *`, async function () {
             await killChrome();
             await runChromeHeadless();
             logger.info(`task ${JSON.stringify(task)} start!`);
