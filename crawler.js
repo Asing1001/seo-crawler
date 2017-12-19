@@ -50,6 +50,10 @@ async function crawlPage(url) {
             const html = await chromeless
                 .setUserAgent(userAgent)
                 .goto(url)
+                .evaluate(() => {
+                    Array.from(document.querySelectorAll('script'))
+                        .forEach(script => script.parentNode.removeChild(script))
+                })
                 .html()
             logger.profile(`Crawl ${url}`)
             const $ = cheerio.load(html)
@@ -63,8 +67,8 @@ async function crawlPage(url) {
                 }
             })
 
-            const uri = new URL(url);
             logger.debug(`visitHash length : ${Object.keys(visitHash).length}, q.length() : ${q.length()}, q.running() : ${q.running()}`);
+            const uri = new URL(url);
             await outputFile(`${_distFolder}${uri.pathname}.html`, html);
             await chromeless.end()
             resolve()
