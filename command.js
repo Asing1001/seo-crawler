@@ -1,9 +1,11 @@
 const { exec } = require('child_process');
 const logger = require('./logger');
+const path = require("path");
 
 async function runChromeHeadless() {
     return new Promise(resolve => {
-        const cmd = '"C:/Program Files (x86)/Google/Chrome/Application/chrome.exe" --remote-debugging-port=9222 --disable-gpu --headless';
+        const chromePath = path.join(__dirname, "\\local-chromium\\win64-515411\\chrome-win32\\chrome.exe");
+        const cmd = `"${chromePath}" --remote-debugging-port=9222 --disable-gpu --headless`;
         const option = {
             timeout: 2000
         }
