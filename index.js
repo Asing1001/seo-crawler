@@ -13,7 +13,7 @@ function run() {
     let startHour = startTime.hour();
     tasks.forEach((task, index) => {
         if (index > 0) {
-            startHour = (startHour + tasks[index - 1].maxDuration) % 24
+            startHour = (startHour + tasks[index - 1].maxDurationInHour) % 24
         }
         logger.info(`Task ${task.startUrl} created, startTime: ${startHour}:${startMinute}:${startSecond}`);
         scheduleJob(`${startSecond} ${startMinute} ${startHour} * * *`, async function () {
