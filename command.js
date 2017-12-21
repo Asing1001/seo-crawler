@@ -1,10 +1,13 @@
 const { exec } = require('child_process');
 const logger = require('./logger');
-const path = require("path");
+const Downloader = require('./utils/ChromiumDownloader');
+const platform = Downloader.currentPlatform();
+const revision = require('./package').puppeteer.chromium_revision;
+const revisionInfo = Downloader.revisionInfo(platform, revision);
 
 async function runChromeHeadless() {
     return new Promise(resolve => {
-        const chromePath = path.join(__dirname, "\\local-chromium\\win64-515411\\chrome-win32\\chrome.exe");
+        const chromePath = revisionInfo.executablePath;
         const cmd = `"${chromePath}" --remote-debugging-port=9222 --disable-gpu --headless`;
         const option = {
             timeout: 2000
