@@ -31,6 +31,6 @@
     "sinon": "^3.2.0"
   },
   "puppeteer": {
-    "chromium_revision": "515411"
+    "chromium_revision": "524617"
   }
 }
