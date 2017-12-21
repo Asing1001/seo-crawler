@@ -68,8 +68,7 @@ async function crawlPage(url) {
             })
 
             logger.debug(`visitHash length : ${Object.keys(visitHash).length}, q.length() : ${q.length()}, q.running() : ${q.running()}`);
-            const uri = new URL(url);
-            await outputFile(`${_distFolder}${uri.pathname}.html`, html);
+            await outputFile(`${_distFolder}${makeValidFileName(url)}.html`, html);
             await chromeless.end()
             resolve()
         }
