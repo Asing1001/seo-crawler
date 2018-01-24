@@ -21,4 +21,8 @@ const crawlerSetting = {
     maxInstance: 20
 }
 
-module.exports = { tasks, crawlerSetting }
+const systemSetting = {
+    logLevel: 'debug'
+}
+
+module.exports = { tasks, crawlerSetting, systemSetting }
