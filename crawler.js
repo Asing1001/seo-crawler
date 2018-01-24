@@ -7,12 +7,8 @@ const queue = require('async/queue');
 const logger = require('./logger');
 const { crawlerSetting: { userAgent, maxInstance } } = require('./config');
 
-let _distFolder, startUri;
+let _distFolder, startUri, q;
 let visitHash = {};
-let q = queue(async function (task, callback) {
-    await crawlPage(task.url);
-    return;
-}, maxInstance);
 
 async function initialize({ startUrl, distFolder = 'dist/' }) {
     await cleanUp();
@@ -36,10 +32,14 @@ async function cleanUp() {
         visitHash = {};
     }
 
-    if (q.running() > 0) {
+    if (q && q.running() > 0) {
         logger.warn(`Pages not completed : ${q.workersList()}`)
-        q.kill()
     }
+
+    q = queue(async function (task, callback) {
+        await crawlPage(task.url);
+        return;
+    }, maxInstance)    
 }
 
 async function crawlPage(url) {
