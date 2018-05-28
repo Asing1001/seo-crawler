@@ -6,7 +6,12 @@ Mordern web use lots of javascript but search engine crawler won't excute it. As
 
 ## Getting Start
 
+### Requirement
+
+- [nodejs 8.11 or more](https://nodejs.org/en/)
+
 ### Install package
+
 ```
 npm install
 ```
