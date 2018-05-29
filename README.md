@@ -57,6 +57,14 @@ const logLevelPriority = {
 
 ## Others
 
+### Register as a window service
+
+1. [Download nssm](http://nssm.cc/download)
+1. Extract it and go to nssm/win64 folder 
+1. Type `nssm install seo-crawler` from command prompt
+1. Select [seo-crawler.bat] as Application Path
+1. `nssm start seo-crawler`
+
 ### Kill chrome process in command line
 `taskkill /F /IM chrome.exe`
 
